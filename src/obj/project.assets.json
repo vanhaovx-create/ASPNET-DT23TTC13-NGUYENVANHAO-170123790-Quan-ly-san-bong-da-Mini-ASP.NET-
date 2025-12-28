@@ -8186,11 +8186,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Admin\\Desktop\\New folder\\FootballManagerMVC\\FootballManagerMVC\\src\\FootballManagerMVC.csproj",
+      "projectUniqueName": "D:\\DỮ LIÊU ASP.NET\\FootballManagerMVC\\FootballManagerMVC\\src\\FootballManagerMVC.csproj",
       "projectName": "FootballManagerMVC",
-      "projectPath": "C:\\Users\\Admin\\Desktop\\New folder\\FootballManagerMVC\\FootballManagerMVC\\src\\FootballManagerMVC.csproj",
+      "projectPath": "D:\\DỮ LIÊU ASP.NET\\FootballManagerMVC\\FootballManagerMVC\\src\\FootballManagerMVC.csproj",
       "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Admin\\Desktop\\New folder\\FootballManagerMVC\\FootballManagerMVC\\src\\obj\\",
+      "outputPath": "D:\\DỮ LIÊU ASP.NET\\FootballManagerMVC\\FootballManagerMVC\\src\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
