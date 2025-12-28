@@ -1,0 +1,68 @@
+@model List<FootballManagerMVC.Models.Field>
+@{
+    ViewData["Title"] = "Quản lý sân bóng";
+    Layout = "_AdminLayout";
+}
+
+<div class="container-fluid my-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="fw-bold"><i class="fas fa-futbol me-2"></i>Quản lý sân bóng</h2>
+                <a href="@Url.Action("Index", "Admin")" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left me-2"></i>Quay lại Dashboard
+                </a>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    @if (Model.Count == 0)
+                    {
+                        <div class="text-center py-5">
+                            <i class="fas fa-futbol fa-4x text-muted mb-3"></i>
+                            <h4 class="text-muted">Chưa có sân bóng nào</h4>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="row g-4">
+                            @foreach (var field in Model)
+                            {
+                                <div class="col-lg-4 col-md-6">
+                                    <div class="card h-100">
+                                        <img src="@field.Image" class="card-img-top" style="height: 200px; object-fit: cover;" alt="@field.Name">
+                                        <div class="card-body">
+                                            <h5 class="card-title fw-bold">@field.Name</h5>
+                                            <p class="card-text text-muted">@field.Description</p>
+                                            
+                                            <div class="row g-2 mb-3 small">
+                                                <div class="col-6">
+                                                    <strong>Giá:</strong> @field.PricePerHour.ToString("N0")đ/giờ
+                                                </div>
+                                                <div class="col-6">
+                                                    <strong>Kích thước:</strong> @field.Size
+                                                </div>
+                                                <div class="col-6">
+                                                    <strong>Mặt sân:</strong> @field.Surface
+                                                </div>
+                                                <div class="col-6">
+                                                    <strong>Trạng thái:</strong> 
+                                                    <span class="badge @(field.Availability ? "bg-success" : "bg-danger")">
+                                                        @(field.Availability ? "Hoạt động" : "Tạm dừng")
+                                                    </span>
+                                                </div>
+                                                <div class="col-12">
+                                                    <strong>Vị trí:</strong> @field.Location
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

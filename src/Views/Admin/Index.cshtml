@@ -1,0 +1,180 @@
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "_AdminLayout";
+    var stats = ViewBag.Stats;
+}
+
+
+
+    <!-- Stats Cards -->
+    <div class="row g-4 mb-5">
+        <div class="col-xl-2 col-md-4 col-sm-6">
+            <div class="card bg-primary text-white h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <div class="h4 fw-bold">@stats.TotalFields</div>
+                            <div>Tổng sân bóng</div>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-futbol fa-2x opacity-75"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-xl-2 col-md-4 col-sm-6">
+            <div class="card bg-success text-white h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <div class="h4 fw-bold">@stats.TotalBookings</div>
+                            <div>Tổng booking</div>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-calendar-check fa-2x opacity-75"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-xl-2 col-md-4 col-sm-6">
+            <div class="card bg-info text-white h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <div class="h4 fw-bold">@stats.TotalUsers</div>
+                            <div>Tổng khách hàng</div>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-users fa-2x opacity-75"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-xl-2 col-md-4 col-sm-6">
+            <div class="card bg-warning text-white h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <div class="h4 fw-bold">@stats.PendingBookings</div>
+                            <div>Chờ xác nhận</div>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-clock fa-2x opacity-75"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-xl-2 col-md-4 col-sm-6">
+            <div class="card bg-secondary text-white h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <div class="h4 fw-bold">@stats.TodayBookings</div>
+                            <div>Booking hôm nay</div>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-calendar-day fa-2x opacity-75"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-xl-2 col-md-4 col-sm-6">
+            <div class="card bg-danger text-white h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <div class="h4 fw-bold">@(((decimal)stats.Revenue).ToString("N0"))đ</div>
+                            <div>Doanh thu</div>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-money-bill-wave fa-2x opacity-75"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row g-4 mb-5">
+        <div class="col-12">
+            <h4 class="fw-bold mb-3">Thao tác nhanh</h4>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-futbol fa-3x text-primary mb-3"></i>
+                    <h5>Quản lý sân bóng</h5>
+                    <p class="text-muted">Xem và quản lý danh sách sân bóng</p>
+                    <a href="@Url.Action("Fields", "Admin")" class="btn btn-primary">
+                        <i class="fas fa-eye me-2"></i>Xem chi tiết
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-6">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-calendar-check fa-3x text-success mb-3"></i>
+                    <h5>Quản lý booking</h5>
+                    <p class="text-muted">Xem và xử lý các booking</p>
+                    <a href="@Url.Action("Bookings", "Admin")" class="btn btn-success">
+                        <i class="fas fa-eye me-2"></i>Xem chi tiết
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-6">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-users fa-3x text-info mb-3"></i>
+                    <h5>Quản lý khách hàng</h5>
+                    <p class="text-muted">Xem danh sách khách hàng</p>
+                    <a href="@Url.Action("Customers", "Admin")" class="btn btn-info">
+                        <i class="fas fa-eye me-2"></i>Xem chi tiết
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-6">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-chart-bar fa-3x text-warning mb-3"></i>
+                    <h5>Báo cáo</h5>
+                    <p class="text-muted">Xem báo cáo và thống kê</p>
+                    <button class="btn btn-warning" disabled>
+                        <i class="fas fa-construction me-2"></i>Đang phát triển
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fas fa-clock me-2"></i>Hoạt động gần đây</h5>
+                </div>
+                <div class="card-body">
+                    <div class="text-center text-muted py-4">
+                        <i class="fas fa-info-circle fa-2x mb-2"></i>
+                        <p>Tính năng này đang được phát triển</p>
+                    </div>
+                </div>
+            </div>
+        </div>

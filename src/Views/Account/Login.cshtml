@@ -1,0 +1,78 @@
+@model FootballManagerMVC.Controllers.LoginViewModel
+@{
+    ViewData["Title"] = "Đăng nhập";
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+            <div class="card shadow">
+                <div class="card-body p-4">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-futbol fa-3x text-primary mb-3"></i>
+                        <h3 class="fw-bold">Đăng nhập</h3>
+                        <p class="text-muted">Chào mừng bạn quay trở lại!</p>
+                    </div>
+
+                    <form asp-action="Login" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                        
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label">Email</label>
+                            <input asp-for="Email" class="form-control" placeholder="Nhập email của bạn" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label asp-for="Password" class="form-label">Mật khẩu</label>
+                            <input asp-for="Password" class="form-control" placeholder="Nhập mật khẩu" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        
+                        <div class="mb-3 form-check">
+                            <input asp-for="RememberMe" class="form-check-input" />
+                            <label asp-for="RememberMe" class="form-check-label">
+                                Ghi nhớ đăng nhập
+                            </label>
+                        </div>
+                        
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-sign-in-alt me-2"></i>Đăng nhập
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="text-center mt-4">
+                        <p class="mb-0">
+                            Chưa có tài khoản? 
+                            <a asp-action="Register" asp-route-returnUrl="@ViewData["ReturnUrl"]" class="text-decoration-none">
+                                Đăng ký ngay
+                            </a>
+                        </p>
+                    </div>
+
+                    <!-- Demo Accounts Info -->
+                    <div class="mt-4">
+                        <div class="alert alert-info">
+                            <h6 class="alert-heading"><i class="fas fa-info-circle me-2"></i>Tài khoản demo</h6>
+                            <div class="row">
+                                <div class="col-12 mb-2">
+                                    <strong>👨‍💼 Quản trị viên:</strong><br>
+                                    <small>Email: <code>admin@footballmanager.vn</code></small><br>
+                                    <small>Mật khẩu: <code>Admin123!</code></small>
+                                </div>
+                                <div class="col-12">
+                                    <strong>👤 Khách hàng:</strong><br>
+                                    <small>Đăng ký tài khoản mới hoặc dùng:</small><br>
+                                    <small>Email: <code>vanhaovx@gmailcom</code></small><br>
+                                    <small>Mật khẩu: <code>Hao@123456</code></small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

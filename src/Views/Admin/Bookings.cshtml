@@ -1,0 +1,143 @@
+@model List<FootballManagerMVC.Models.Booking>
+@{
+    ViewData["Title"] = "Quản lý booking";
+    Layout = "_AdminLayout";
+}
+
+<div class="container-fluid my-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="fw-bold"><i class="fas fa-calendar-check me-2"></i>Quản lý booking</h2>
+                <a href="@Url.Action("Index", "Admin")" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left me-2"></i>Quay lại Dashboard
+                </a>
+            </div>
+
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="fas fa-check-circle me-2"></i>@TempData["Success"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="fas fa-exclamation-circle me-2"></i>@TempData["Error"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+
+            <div class="card">
+                <div class="card-body">
+                    @if (Model.Count == 0)
+                    {
+                        <div class="text-center py-5">
+                            <i class="fas fa-calendar-times fa-4x text-muted mb-3"></i>
+                            <h4 class="text-muted">Chưa có booking nào</h4>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Khách hàng</th>
+                                        <th>Sân bóng</th>
+                                        <th>Ngày</th>
+                                        <th>Giờ</th>
+                                        <th>Thời gian</th>
+                                        <th>Tổng tiền</th>
+                                        <th>Trạng thái</th>
+                                        <th>Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var booking in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <small class="text-muted">@booking.Id.Substring(0, 8)...</small>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <strong>@booking.UserName</strong>
+                                                    <br>
+                                                    <small class="text-muted">@booking.UserPhone</small>
+                                                </div>
+                                            </td>
+                                            <td>@booking.Field.Name</td>
+                                            <td>@booking.Date.ToString("dd/MM/yyyy")</td>
+                                            <td>@booking.StartTime.ToString(@"hh\:mm") - @booking.EndTime.ToString(@"hh\:mm")</td>
+                                            <td>@booking.Duration giờ</td>
+                                            <td>@booking.TotalPrice.ToString("N0")đ</td>
+                                            <td>
+                                                <span class="badge @(booking.Status switch {
+                                                    "pending" => "bg-warning",
+                                                    "confirmed" => "bg-success", 
+                                                    "cancelled" => "bg-danger",
+                                                    "completed" => "bg-secondary",
+                                                    _ => "bg-secondary"
+                                                })">
+                                                    @(booking.Status switch {
+                                                        "pending" => "Chờ xác nhận",
+                                                        "confirmed" => "Đã xác nhận", 
+                                                        "cancelled" => "Đã hủy",
+                                                        "completed" => "Hoàn thành",
+                                                        _ => booking.Status
+                                                    })
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <div class="btn-group" role="group">
+                                                    @if (booking.Status == "pending")
+                                                    {
+                                                        <form asp-action="UpdateBookingStatus" method="post" class="d-inline">
+                                                            <input type="hidden" name="id" value="@booking.Id" />
+                                                            <input type="hidden" name="status" value="confirmed" />
+                                                            <button type="submit" class="btn btn-success btn-sm" title="Xác nhận">
+                                                                <i class="fas fa-check"></i>
+                                                            </button>
+                                                        </form>
+                                                        <form asp-action="UpdateBookingStatus" method="post" class="d-inline">
+                                                            <input type="hidden" name="id" value="@booking.Id" />
+                                                            <input type="hidden" name="status" value="cancelled" />
+                                                            <button type="submit" class="btn btn-warning btn-sm" title="Hủy">
+                                                                <i class="fas fa-times"></i>
+                                                            </button>
+                                                        </form>
+                                                    }
+                                                    @if (booking.Status == "confirmed")
+                                                    {
+                                                        <form asp-action="UpdateBookingStatus" method="post" class="d-inline">
+                                                            <input type="hidden" name="id" value="@booking.Id" />
+                                                            <input type="hidden" name="status" value="completed" />
+                                                            <button type="submit" class="btn btn-secondary btn-sm" title="Hoàn thành">
+                                                                <i class="fas fa-flag-checkered"></i>
+                                                            </button>
+                                                        </form>
+                                                    }
+                                                    <form asp-action="DeleteBooking" method="post" class="d-inline"
+                                                          onsubmit="return confirm('Bạn có chắc muốn xóa booking này?')">
+                                                        <input type="hidden" name="id" value="@booking.Id" />
+                                                        <button type="submit" class="btn btn-danger btn-sm" title="Xóa">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,166 @@
+@model FootballManagerMVC.Models.Field
+@{
+    ViewData["Title"] = Model.Name;
+    var features = ViewBag.Features as List<string> ?? new List<string>();
+}
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <img src="@Model.Image" class="card-img-top" style="height: 400px; object-fit: cover;" alt="@Model.Name">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h1 class="card-title fw-bold">@Model.Name</h1>
+                        <div class="text-end">
+                            <div class="h4 text-success fw-bold mb-0">@Model.PricePerHour.ToString("N0")đ</div>
+                            <small class="text-muted">/ giờ</small>
+                        </div>
+                    </div>
+                    
+                    <p class="card-text text-muted mb-4">@Model.Description</p>
+                    
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-4">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-users text-primary me-2"></i>
+                                <div>
+                                    <small class="text-muted d-block">Kích thước</small>
+                                    <strong>@Model.Size</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-layer-group text-success me-2"></i>
+                                <div>
+                                    <small class="text-muted d-block">Mặt sân</small>
+                                    <strong>@Model.Surface</strong>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-map-marker-alt text-danger me-2"></i>
+                                <div>
+                                    <small class="text-muted d-block">Vị trí</small>
+                                    <strong>@Model.Location</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5 class="fw-bold mb-3">Tiện ích</h5>
+                        <div class="d-flex flex-wrap gap-2">
+                            @foreach (var feature in features)
+                            {
+                                <span class="badge bg-light text-dark border px-3 py-2">
+                                    <i class="fas fa-check text-success me-1"></i>@feature
+                                </span>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="card shadow-sm sticky-top" style="top: 20px;">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-calendar-alt me-2"></i>Đặt sân ngay</h5>
+                </div>
+                <div class="card-body">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <form asp-controller="Booking" asp-action="Create" method="post">
+                            <input type="hidden" name="FieldId" value="@Model.Id" />
+                            
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Ngày đặt sân</label>
+                                <input type="date" class="form-control" name="Date" 
+                                       min="@DateTime.Today.ToString("yyyy-MM-dd")" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Giờ bắt đầu</label>
+                                <select class="form-select" name="StartTime" required>
+                                    <option value="">Chọn giờ</option>
+                                    @for (int hour = 6; hour <= 22; hour++)
+                                    {
+                                        <option value="@hour:00">@hour:00</option>
+                                        <option value="@hour:30">@hour:30</option>
+                                    }
+                                </select>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Thời gian (giờ)</label>
+                                <select class="form-select" name="Duration" required>
+                                    <option value="">Chọn thời gian</option>
+                                    <option value="1">1 giờ</option>
+                                    <option value="2">2 giờ</option>
+                                    <option value="3">3 giờ</option>
+                                    <option value="4">4 giờ</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Ghi chú</label>
+                                <textarea class="form-control" name="Notes" rows="3" 
+                                          placeholder="Ghi chú thêm (không bắt buộc)"></textarea>
+                            </div>
+                            
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-calendar-check me-2"></i>Đặt sân ngay
+                                </button>
+                            </div>
+                        </form>
+                    }
+                    else
+                    {
+                        <div class="text-center">
+                            <i class="fas fa-user-lock fa-3x text-muted mb-3"></i>
+                            <p class="text-muted mb-3">Vui lòng đăng nhập để đặt sân</p>
+                            <div class="d-grid gap-2">
+                                <a asp-controller="Account" asp-action="Login" class="btn btn-primary">
+                                    <i class="fas fa-sign-in-alt me-2"></i>Đăng nhập
+                                </a>
+                                <a asp-controller="Account" asp-action="Register" class="btn btn-outline-primary">
+                                    <i class="fas fa-user-plus me-2"></i>Đăng ký
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            
+            <div class="card shadow-sm mt-4">
+                <div class="card-header">
+                    <h6 class="mb-0"><i class="fas fa-info-circle me-2"></i>Thông tin liên hệ</h6>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-2">
+                        <i class="fas fa-phone text-success me-2"></i>
+                        <span>0123 456 789</span>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-envelope text-primary me-2"></i>
+                        <span>info@footballmanager.vn</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="text-center">
+                <a href="@Url.Action("Index", "Home")" class="btn btn-outline-primary">
+                    <i class="fas fa-arrow-left me-2"></i>Quay lại danh sách sân
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
